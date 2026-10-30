@@ -1,0 +1,8 @@
+
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{ title }}</title><link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}"></head><body>
+<header></header><main><section class="panel"><h1>{{ title }}</h1><p>{{ subtitle }}</p><div class="progress"><span style="width:35%"></span></div>
+<form method="post">
+{% for item in items %}<fieldset><legend>{{ loop.index }}. {{ item.q }}</legend>
+{% for option in item.options %}<label class="choice"><input type="radio" name="{{ item.id }}" value="{{ loop.index0 }}" required><span>{{ option }}</span></label>{% endfor %}
+</fieldset>{% endfor %}
+<div class="actions"><span class="muted">Please answer each item.</span><button type="submit">Continue →</button></div></form></section></main></body></html>

@@ -1,0 +1,306 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Learning material</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+        /* Concept map display */
+        .map-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .study-map {
+            display: block;
+            max-width: 100%;
+            max-height: 600px;
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        /* Enlarge button */
+        .enlarge-map-btn {
+            display: block;
+            margin: 15px auto 25px;
+            cursor: pointer;
+        }
+
+        /* Enlarged map overlay */
+        .map-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.90);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .map-modal img {
+            max-width: 95vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Close button */
+        .close-map {
+            position: absolute;
+            top: 15px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-map:hover {
+            color: #cccccc;
+        }
+
+        /* Make modal image fit smaller screens */
+        @media (max-width: 600px) {
+            .map-modal {
+                padding: 10px;
+            }
+
+            .close-map {
+                top: 10px;
+                right: 15px;
+                font-size: 35px;
+            }
+
+            .study-map {
+                max-height: 450px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    
+    <div class="tag">Learning material {{ stage }} of 2</div>
+</header>
+
+<main>
+    <section class="panel">
+
+        <span class="pill">Read the passage carefully</span>
+
+        <h1>
+            {% if stage == 1 %}
+                Unicast
+            {% else %}
+                Modem
+            {% endif %}
+        </h1>
+
+        <p>
+            <strong>Important:</strong>
+            You can view this material only once. Once you proceed to the questions, you cannot return to it.
+            
+        </p>
+
+        {% if condition == 'concept_map' %}
+
+            <!-- Concept map condition -->
+
+            {% if stage == 1 %}
+
+                <div class="map-container">
+                    <img
+                        class="study-map"
+                        src="{{ url_for('static', filename='maps/unicast_map.png') }}"
+                        alt="Unicast concept map"
+                    >
+                </div>
+
+            {% else %}
+
+                <div class="map-container">
+                    <img
+                        class="study-map"
+                        src="{{ url_for('static', filename='maps/modem_map.png') }}"
+                        alt="Modem concept map"
+                    >
+                </div>
+
+            {% endif %}
+
+            <!-- Enlarge button -->
+            <button
+                type="button"
+                class="button enlarge-map-btn"
+                onclick="openMapModal()"
+            >
+                🔍 Enlarge concept map
+            </button>
+
+            <!-- Enlarged image modal -->
+            <div id="mapModal" class="map-modal">
+
+                <button
+                    type="button"
+                    class="close-map"
+                    onclick="closeMapModal()"
+                    aria-label="Close enlarged concept map"
+                >
+                    &times;
+                </button>
+
+                <img
+                    id="enlargedMap"
+                    src=""
+                    alt="Enlarged concept map"
+                >
+
+            </div>
+
+        {% else %}
+
+            <!-- Text condition -->
+
+            {% if stage == 1 %}
+
+                <article class="reading">
+
+                    <h2>Unicast</h2>
+
+                    <p>
+                        Unicast is a process defined as the transmission of
+                        data to a single recipient, with its primary purpose
+                        being to send data to a specific destination. For
+                        this process to occur, prerequisites include a
+                        Source IP address and a Destination IP address,
+                        while the necessary inputs are the data to be
+                        transmitted and the Destination IP address. The
+                        Unicast process involves several steps: packet
+                        creation, routing decision, packet transmission,
+                        and packet reception. Additionally, sub-processes
+                        such as error detection and flow control are
+                        involved. The entities participating in this
+                        process are the source device and the destination
+                        device. The results of Unicast can be either
+                        successful data transmission or, alternatively,
+                        packet loss or error. However, failure conditions
+                        like network congestion or the destination device
+                        being unreachable can prevent successful data
+                        transmission.
+                    </p>
+
+                </article>
+
+            {% else %}
+
+                <article class="reading">
+
+                    <h2>Modem</h2>
+
+                    <p>
+                        A Modem is a device that modulates and demodulates
+                        signals for data transmission, thereby enabling
+                        data communication over analog networks. This
+                        functionality is achieved through its core
+                        components, a Modulator and a Demodulator, which
+                        perform the processes of Modulation and
+                        Demodulation, respectively. Common types of
+                        modems include Cable Modems and DSL Modems. For
+                        its operation, a Modem requires accessories such
+                        as a Power Supply and a Network Cable. A Modem
+                        is manufactured and configured by the vendor,
+                        and its maintenance involves regular software
+                        updates and hardware checks. When it reaches
+                        the end of its life, its destruction is managed
+                        through electronic waste recycling programs.
+                        However, Modems can have side effects, including
+                        interference with other devices and a dependence
+                        on analog signal quality. Furthermore, a Modem
+                        is often related to other entities like a Router
+                        and a Computer.
+                    </p>
+
+                </article>
+
+            {% endif %}
+
+        {% endif %}
+
+        <!-- Navigation -->
+        <div class="actions">
+
+            <span class="muted">
+                Part {{ stage }} of 2
+            </span>
+
+            <a
+                class="button"
+                href="{{ url_for('assessment') }}"
+            >
+            I have read it. Answer the questions →
+            </a>
+
+        </div>
+
+    </section>
+</main>
+
+<!-- JavaScript for enlarged concept map -->
+<script>
+    function openMapModal() {
+        const mapImage = document.querySelector(".study-map");
+        const modal = document.getElementById("mapModal");
+        const enlargedMap = document.getElementById("enlargedMap");
+
+        if (mapImage && modal && enlargedMap) {
+            enlargedMap.src = mapImage.src;
+            modal.style.display = "flex";
+        }
+    }
+
+    function closeMapModal() {
+        const modal = document.getElementById("mapModal");
+
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Close the modal when clicking outside the image
+    const mapModal = document.getElementById("mapModal");
+
+    if (mapModal) {
+        mapModal.addEventListener("click", function (event) {
+            if (event.target === mapModal) {
+                closeMapModal();
+            }
+        });
+    }
+
+    // Close the modal with the Escape key
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeMapModal();
+        }
+    });
+</script>
+
+</body>
+</html>

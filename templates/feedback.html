@@ -1,0 +1,7 @@
+
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Feedback</title><link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}"></head><body>
+<header><div class="tag">Final step</div></header><main><section class="panel"><span class="pill">Feedback</span><h1>How was the learning material?</h1><p>Your feedback helps us check the study materials and online experience.</p><form method="post">
+<fieldset><legend>Was the language of 2 paragraphs easy to understand?</legend>{% for n in range(1,6) %}<label class="choice"><input type="radio" name="clarity" value="{{ n }}" required><span>{{ n }}{% if n==1 %} · Not clear{% elif n==5 %} · Very clear{% endif %}</span></label>{% endfor %}</fieldset>
+<fieldset><legend>Was the content difficult to understand?</legend>{% for n in range(1,6) %}<label class="choice"><input type="radio" name="difficulty" value="{{ n }}" required><span>{{ n }}{% if n==1 %} · Very easy{% elif n==5 %} · Very difficult{% endif %}</span></label>{% endfor %}</fieldset>
+<label for="comment"><strong>Optional comment</strong></label><textarea id="comment" name="comment" placeholder="Any feedback about the material or questions?"></textarea>
+<div class="actions"><span class="muted">Submit to finish.</span><button type="submit">Submit response</button></div></form></section></main></body></html>

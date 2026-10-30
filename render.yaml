@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: learning-format-study
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 4 --timeout 120
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB
+        value: learning_format_study
+      - key: SECRET_KEY
+        generateValue: true
+      - key: RESEARCHER_KEY
+        sync: false
